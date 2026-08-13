@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Wedding of Mitha & Rifky | 3D Luxury Boarding Pass</title>
+    <title>The Wedding of Mitha & Rifky | Boarding Pass</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Fonts -->
@@ -124,7 +124,7 @@
             <span id="musicStatus" class="text-xs font-semibold pr-2 tracking-wider">PUTAR MUSIK</span>
         </button>
         <audio id="bgMusic" loop>
-            <source src="lagu.mp3" type="audio/mpeg">
+            <source src="perfect.mp3" type="audio/mpeg">
         </audio>
     </div>
 
@@ -654,22 +654,8 @@
 
             <!-- LIVE WISHES WALL LIST -->
             <div class="mt-8 pt-6 border-t border-gold/20 space-y-4">
-                <h4 class="text-xs font-mono font-bold text-gold uppercase tracking-wider text-center"><i class="fa-solid fa-comments mr-2"></i> Ucapan dari Tamu Undangan (<span id="wishCount">2</span>)</h4>
+                <h4 class="text-xs font-mono font-bold text-gold uppercase tracking-wider text-center"><i class="fa-solid fa-comments mr-2"></i> Ucapan dari Tamu Undangan (<span id="wishCount">0</span>)</h4>
                 <div id="wishesContainer" class="space-y-3 max-h-60 overflow-y-auto pr-2">
-                    <div class="glass-3d p-3 rounded-xl border border-gold/20 text-xs">
-                        <div class="flex justify-between items-center mb-1">
-                            <span class="font-bold text-gold font-serif">Keluarga Besar Bandung</span>
-                            <span class="text-[9px] text-creamWarm/50">Baru Saja</span>
-                        </div>
-                        <p class="text-creamWarm/80 italic">"Selamat ya Mitha dan Rifky! Semoga lancar sampai hari H dan menjadi keluarga yang sakinah mawaddah warahmah. Aamiin."</p>
-                    </div>
-                    <div class="glass-3d p-3 rounded-xl border border-gold/20 text-xs">
-                        <div class="flex justify-between items-center mb-1">
-                            <span class="font-bold text-gold font-serif">Sahabat Rifky</span>
-                            <span class="text-[9px] text-creamWarm/50">1 jam lalu</span>
-                        </div>
-                        <p class="text-creamWarm/80 italic">"Happy Wedding bro Rifky & Mitha! Langgeng terus sampai kakek nenek yaaa!"</p>
-                    </div>
                 </div>
             </div>
         </section>
@@ -685,9 +671,17 @@
     <!-- SCRIPTS -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
+        if ('scrollRestoration' in history) {
+        history.scrollRestoration = 'manual';
+        }
+
+        window.addEventListener('load', function () {
+            window.scrollTo(0, 0);
+        });
         // Initialize AOS
         AOS.init({ duration: 800, once: true });
-
+        
+        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxR_j_jGhxoRnPOIjsNh3cbAvzcEY1YeEoFLLSaOvlwuRVpSWmO0CPtAcqzoBqOdbqchg/exec";
         // Parse Guest Name from URL ?to=Nama
         const urlParams = new URLSearchParams(window.location.search);
         const guestName = urlParams.get('to') || urlParams.get('n');
@@ -749,32 +743,303 @@
             alert(`Nomor Rekening ${bank} (${text}) berhasil disalin!`);
         }
 
-        // Live RSVP Handler
-        function handleRSVP(e) {
-            e.preventDefault();
-            const name = document.getElementById('guestInputName').value;
+            async function handleRSVP(e) {
+                e.preventDefault();
+
+            const form = document.getElementById('rsvpForm');
+
+            const name = document.getElementById('guestInputName').value.trim();
             const status = document.getElementById('attendanceSelect').value;
-            const wish = document.getElementById('wishInput').value;
+            const wish = document.getElementById('wishInput').value.trim();
 
-            const wishesContainer = document.getElementById('wishesContainer');
-            const wishCount = document.getElementById('wishCount');
+            if (!name) {
+                alert('Nama wajib diisi.');
+                return;
+            }
 
-            const newCard = document.createElement('div');
-            newCard.className = "glass-3d p-3 rounded-xl border border-gold/40 text-xs animate-bounce";
-            newCard.innerHTML = `
-                <div class="flex justify-between items-center mb-1">
-                    <span class="font-bold text-gold font-serif">${name} <span class="text-[9px] bg-gold/20 text-lightGold px-1.5 py-0.5 rounded ml-1">${status}</span></span>
-                    <span class="text-[9px] text-creamWarm/50">Baru Saja</span>
-                </div>
-                <p class="text-creamWarm/90 italic">"${wish}"</p>
+            if (!wish) {
+                alert('Ucapan & doa wajib diisi.');
+                return;
+            }
+
+            const currentUrl = window.location.href;
+
+            const submitButton = form.querySelector('button[type="submit"]');
+            const originalButtonText = submitButton.innerHTML;
+
+            submitButton.disabled = true;
+            submitButton.innerHTML = `
+                <i class="fa-solid fa-spinner fa-spin mr-2"></i>
+                MENGIRIM...
             `;
 
-            wishesContainer.prepend(newCard);
-            wishCount.innerText = parseInt(wishCount.innerText) + 1;
+            try {
 
-            alert(`Terima kasih ${name}, konfirmasi kehadiran (${status}) dan ucapan Anda telah masuk!`);
-            document.getElementById('rsvpForm').reset();
+                const formData = new URLSearchParams();
+
+                formData.append('nama', name);
+                formData.append('status', status);
+                formData.append('ucapan', wish);
+                formData.append('guest_url', currentUrl);
+
+                console.log("Mengirim ke Apps Script:", {
+                    nama: name,
+                    status: status,
+                    ucapan: wish,
+                    guest_url: currentUrl
+                });
+
+                const response = await fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                console.log("HTTP status:", response.status);
+
+                const responseText = await response.text();
+
+                console.log("Response Apps Script:", responseText);
+
+                let result;
+
+                try {
+                    result = JSON.parse(responseText);
+                } catch (error) {
+                    console.error("Response bukan JSON:", responseText);
+
+                    throw new Error(
+                        "Response dari Google Apps Script tidak valid."
+                    );
+                }
+
+                if (!result.success) {
+                    throw new Error(
+                        result.message || 'Gagal menyimpan ucapan.'
+                    );
+                }
+
+                // ==========================================
+                // TAMPILKAN UCAPAN DI WEBSITE
+                // ==========================================
+
+                const wishesContainer =
+                    document.getElementById('wishesContainer');
+
+                const wishCount =
+                    document.getElementById('wishCount');
+
+                const newCard = document.createElement('div');
+
+                newCard.className =
+                    "glass-3d p-3 rounded-xl border border-gold/40 text-xs animate-bounce";
+
+                const header = document.createElement('div');
+
+                header.className =
+                    "flex justify-between items-center mb-1";
+
+                const nameElement = document.createElement('span');
+
+                nameElement.className =
+                    "font-bold text-gold font-serif";
+
+                nameElement.textContent = name + " ";
+
+                const statusElement = document.createElement('span');
+
+                statusElement.className =
+                    "text-[9px] bg-gold/20 text-lightGold px-1.5 py-0.5 rounded ml-1";
+
+                statusElement.textContent = status;
+
+                nameElement.appendChild(statusElement);
+
+                const timeElement = document.createElement('span');
+
+                timeElement.className =
+                    "text-[9px] text-creamWarm/50";
+
+                timeElement.textContent = "Baru Saja";
+
+                header.appendChild(nameElement);
+                header.appendChild(timeElement);
+
+                const wishElement = document.createElement('p');
+
+                wishElement.className =
+                    "text-creamWarm/90 italic";
+
+                wishElement.textContent = `"${wish}"`;
+
+                newCard.appendChild(header);
+                newCard.appendChild(wishElement);
+
+                wishesContainer.prepend(newCard);
+
+                // ==========================================
+                // UPDATE JUMLAH UCAPAN
+                // ==========================================
+
+                const currentCount =
+                    parseInt(wishCount.innerText || '0');
+
+                wishCount.innerText = currentCount + 1;
+
+                alert(
+                    `Terima kasih ${name}, konfirmasi kehadiran (${status}) dan ucapan Anda telah berhasil disimpan!`
+                );
+
+                form.reset();
+
+                if (guestName) {
+                    document.getElementById('guestInputName').value =
+                        guestName;
+                }
+
+            } catch (error) {
+
+                console.error('Gagal mengirim RSVP:', error);
+
+                alert(
+                    'Maaf, ucapan belum berhasil disimpan. Silakan coba lagi.'
+                );
+
+            } finally {
+
+                submitButton.disabled = false;
+                submitButton.innerHTML = originalButtonText;
+            }
         }
+
+            async function loadWishes() {
+            try {
+
+                console.log("Mengambil ucapan dari Google Sheet...");
+
+                const response = await fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'GET'
+                });
+
+                const result = await response.json();
+
+                console.log("Data ucapan:", result);
+
+                if (!result.success) {
+                    throw new Error(
+                        result.message || 'Gagal mengambil ucapan.'
+                    );
+                }
+
+                const wishesContainer =
+                    document.getElementById('wishesContainer');
+
+                const wishCount =
+                    document.getElementById('wishCount');
+
+                // Kosongkan isi lama
+                wishesContainer.innerHTML = '';
+
+                const wishes = result.data || [];
+
+                wishes.forEach(function(item) {
+
+                    const newCard = document.createElement('div');
+
+                    newCard.className =
+                        "glass-3d p-3 rounded-xl border border-gold/40 text-xs";
+
+                    // Header
+                    const header = document.createElement('div');
+
+                    header.className =
+                        "flex justify-between items-center mb-1";
+
+                    // Nama
+                    const nameElement = document.createElement('span');
+
+                    nameElement.className =
+                        "font-bold text-gold font-serif";
+
+                    nameElement.textContent =
+                        (item.nama || "") + " ";
+
+                    // Status
+                    const statusElement = document.createElement('span');
+
+                    statusElement.className =
+                        "text-[9px] bg-gold/20 text-lightGold px-1.5 py-0.5 rounded ml-1";
+
+                    statusElement.textContent =
+                        item.status || "";
+
+                    nameElement.appendChild(statusElement);
+
+                    // Waktu
+                    const timeElement = document.createElement('span');
+
+                    timeElement.className =
+                        "text-[9px] text-creamWarm/50";
+
+                    timeElement.textContent =
+                        formatWishDate(item.created_at);
+
+                    header.appendChild(nameElement);
+                    header.appendChild(timeElement);
+
+                    // Ucapan
+                    const wishElement = document.createElement('p');
+
+                    wishElement.className =
+                        "text-creamWarm/90 italic";
+
+                    wishElement.textContent =
+                        `"${item.ucapan || ""}"`;
+
+                    newCard.appendChild(header);
+                    newCard.appendChild(wishElement);
+
+                    wishesContainer.appendChild(newCard);
+                });
+
+                // Update jumlah ucapan
+                wishCount.innerText = wishes.length;
+
+                console.log(
+                    "Berhasil menampilkan " +
+                    wishes.length +
+                    " ucapan."
+                );
+
+            } catch (error) {
+
+                console.error(
+                    "Gagal mengambil ucapan:",
+                    error
+                );
+            }
+        }
+
+        function formatWishDate(dateValue) {
+            if (!dateValue) {
+                return "";
+            }
+
+            const date = new Date(dateValue);
+
+            if (isNaN(date.getTime())) {
+                return "Baru saja";
+            }
+
+            return date.toLocaleString('id-ID', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+
+        loadWishes();
 
         // 3D Particle Canvas Script
         const canvas = document.getElementById('particleCanvas');
