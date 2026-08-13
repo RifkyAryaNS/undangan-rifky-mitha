@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Wedding of Mitha & Rifky | 3D Luxury Boarding Pass</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800&family=Montserrat:wght@300;400;600;700&family=Sacramento&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- AOS Animate CSS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Vanilla Tilt JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        gold: '#D4AF37',
+                        lightGold: '#F3E5AB',
+                        darkGold: '#AA7C11',
+                        earthDark: '#1A1412',
+                        earthMedium: '#2C221E',
+                        earthCard: '#3A2E2B',
+                        creamWarm: '#F9F6F0',
+                        creamCard: '#EFE8DC',
+                        accentBronze: '#C59B27'
+                    },
+                    fontFamily: {
+                        serif: ['Cinzel', 'serif'],
+                        sans: ['Montserrat', 'sans-serif'],
+                        script: ['Sacramento', 'cursive']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background: radial-gradient(circle at center, #2C221E 0%, #120D0C 100%);
+            color: #F9F6F0;
+            overflow-x: hidden;
+        }
+
+        /* 3D Glassmorphism & Card Styles */
+        .glass-3d {
+            background: rgba(44, 34, 30, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), inset 0 1px 1px rgba(255, 255, 255, 0.2);
+        }
+
+        .ticket-glass {
+            background: linear-gradient(135deg, rgba(249, 246, 240, 0.96) 0%, rgba(239, 232, 220, 0.92) 100%);
+            color: #2C221E;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7), inset 0 0 20px rgba(212, 175, 55, 0.2);
+        }
+
+        /* Gold Foil Effect */
+        .gold-text {
+            background: linear-gradient(135deg, #FFE57F 0%, #D4AF37 50%, #996515 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* 3D Floating Animation */
+        @keyframes float3D {
+            0%, 100% { transform: translateY(0px) rotateX(0deg) rotateY(0deg); }
+            50% { transform: translateY(-12px) rotateX(4deg) rotateY(-4deg); }
+        }
+        .animate-float-3d {
+            animation: float3D 6s ease-in-out infinite;
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 15px rgba(212, 175, 55, 0.4); }
+            50% { box-shadow: 0 0 35px rgba(212, 175, 55, 0.8); }
+        }
+        .pulse-gold {
+            animation: pulseGlow 3s infinite;
+        }
+
+        /* Vinyl Spinner */
+        @keyframes spinSlow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .spin-vinyl {
+            animation: spinSlow 8s linear infinite;
+        }
+
+        /* Canvas particles */
+        #particleCanvas {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #120D0C; }
+        ::-webkit-scrollbar-thumb { background: #D4AF37; border-radius: 4px; }
+    </style>
+</head>
+<body class="font-sans antialiased relative selection:bg-gold selection:text-earthDark">
+
+    <!-- 3D Particle Canvas Background -->
+    <canvas id="particleCanvas"></canvas>
+
+    <!-- MUSIC CONTROLLER FLOATING 3D -->
+    <div class="fixed top-5 right-5 z-50 flex items-center gap-3">
+        <button id="musicToggle" onclick="toggleMusic()" class="glass-3d p-3 rounded-full flex items-center gap-2 hover:scale-110 transition duration-300 text-gold border border-gold/50 shadow-2xl">
+            <div id="vinylDisk" class="w-8 h-8 rounded-full bg-earthDark border-2 border-gold flex items-center justify-center">
+                <i class="fa-solid fa-compact-disc text-gold text-lg"></i>
+            </div>
+            <span id="musicStatus" class="text-xs font-semibold pr-2 tracking-wider">PUTAR MUSIK</span>
+        </button>
+        <audio id="bgMusic" loop>
+            <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=romantic-wedding-113880.mp3" type="audio/mpeg">
+        </audio>
+    </div>
+
+    <!-- COVER / OVERLAY SCREEN (INTERACTIVE BOARDING PASS ENVELOPE) -->
+    <div id="coverOverlay" class="fixed inset-0 z-50 bg-earthDark flex flex-col items-center justify-center p-4 transition-all duration-1000">
+        <div class="max-w-md w-full glass-3d rounded-3xl p-8 text-center space-y-6 relative border-2 border-gold/40 shadow-2xl animate-float-3d" data-tilt data-tilt-max="15" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.3">
+            
+            <div class="inline-block p-4 rounded-full bg-gold/10 border border-gold/40 text-gold mb-2">
+                <i class="fa-solid fa-plane-departure text-3xl animate-bounce"></i>
+            </div>
+
+            <div class="space-y-1">
+                <p class="font-serif text-xs tracking-[0.3em] text-gold uppercase">BOARDING PASS INVITATION</p>
+                <h1 class="font-serif text-3xl font-bold text-creamWarm gold-text tracking-wide">MITHA & RIFKY</h1>
+                <p class="text-xs text-creamWarm/70 italic font-serif">Destination: Forever Together</p>
+            </div>
+
+            <div class="relative rounded-2xl overflow-hidden border-2 border-gold/30 h-48 group shadow-inner">
+                <img src="image_0.png" alt="Mitha & Rifky Cover" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                <div class="absolute inset-0 bg-gradient-to-t from-earthDark via-transparent to-transparent"></div>
+                <div class="absolute bottom-3 left-0 right-0 text-center">
+                    <span class="text-[10px] font-mono tracking-widest bg-gold/20 text-lightGold px-3 py-1 rounded-full border border-gold/40">FLIGHT #MR181026</span>
+                </div>
+            </div>
+
+            <div class="text-xs text-creamWarm/80 space-y-1">
+                <p class="font-light">Kepada Yth. Bapak/Ibu/Saudara/i:</p>
+                <p class="font-bold text-base text-gold font-serif capitalize" id="guestName">Tamu Undangan Spesial</p>
+            </div>
+
+            <button onclick="openInvitation()" class="w-full py-4 bg-gradient-to-r from-gold via-lightGold to-darkGold text-earthDark font-serif font-bold text-sm tracking-widest rounded-2xl shadow-xl hover:scale-105 active:scale-95 transition-all duration-300 pulse-gold flex items-center justify-center gap-2">
+                <i class="fa-solid fa-envelope-open-text text-base"></i> BUKA UNDANGAN
+            </button>
+        </div>
+    </div>
+
+    <!-- MAIN INVITATION CONTENT -->
+    <main class="relative z-10 max-w-2xl mx-auto px-4 py-12 space-y-16">
+
+        <!-- HEADER BANNER -->
+        <section class="text-center space-y-4" data-aos="fade-down" data-aos-duration="1200">
+            <div class="inline-flex items-center gap-2 bg-gold/10 text-gold px-4 py-1.5 rounded-full border border-gold/30 text-xs font-mono tracking-widest">
+                <i class="fa-solid fa-ticket"></i> OFFICIAL BOARDING PASS
+            </div>
+            <h2 class="text-4xl md:text-5xl font-serif font-bold gold-text tracking-wider">WEDDING AIRWAYS</h2>
+            <p class="text-sm font-mono tracking-[0.2em] text-creamWarm/80">SUNDAY, 18 OCTOBER 2026</p>
+        </section>
+
+        <!-- 3D TICKET BOARDING PASS CARD -->
+        <section data-aos="zoom-in" data-aos-duration="1000">
+            <div class="ticket-glass rounded-3xl p-6 md:p-8 relative border-2 border-gold shadow-2xl overflow-hidden" data-tilt data-tilt-max="10" data-tilt-perspective="1000">
+                
+                <!-- Ticket Top Bar -->
+                <div class="flex justify-between items-center border-b border-earthMedium/20 pb-4 mb-6 text-xs font-mono text-earthMedium">
+                    <span class="font-bold flex items-center gap-2"><i class="fa-solid fa-plane text-accentBronze"></i> BOARDING PASS</span>
+                    <span class="bg-earthMedium text-creamWarm px-3 py-1 rounded-full text-[10px] tracking-wider">FIRST CLASS</span>
+                </div>
+
+                <!-- Flight Route Couple -->
+                <div class="grid grid-cols-3 items-center text-center my-4">
+                    <div class="space-y-1">
+                        <span class="text-xs font-mono text-earthMedium/60">PASSENGER 1</span>
+                        <h3 class="text-2xl md:text-3xl font-serif font-bold text-earthMedium">MITHA</h3>
+                        <p class="text-[10px] font-semibold text-accentBronze">BRIDE</p>
+                    </div>
+                    <div class="flex flex-col items-center justify-center">
+                        <i class="fa-solid fa-plane text-2xl text-accentBronze animate-pulse"></i>
+                        <div class="w-full border-t-2 border-dashed border-earthMedium/30 my-2"></div>
+                        <span class="text-[10px] font-mono bg-accentBronze/20 text-earthMedium px-2 py-0.5 rounded font-bold">18.10.2026</span>
+                    </div>
+                    <div class="space-y-1">
+                        <span class="text-xs font-mono text-earthMedium/60">PASSENGER 2</span>
+                        <h3 class="text-2xl md:text-3xl font-serif font-bold text-earthMedium">RIFKY</h3>
+                        <p class="text-[10px] font-semibold text-accentBronze">GROOM</p>
+                    </div>
+                </div>
+
+                <!-- Full Couple Bios -->
+                <div class="mt-6 pt-6 border-t border-earthMedium/20 text-center space-y-4 font-serif text-earthMedium">
+                    <div class="p-3 rounded-2xl bg-creamWarm/60 border border-earthMedium/10">
+                        <h4 class="text-lg font-bold text-earthMedium">Mitha Kumala Dewi</h4>
+                        <p class="text-xs font-sans text-earthMedium/80 mt-1">Putri Tercinta dari <br><b>Bpk. Sahrudin</b> & <b>Ibu Sahrudin</b></p>
+                    </div>
+                    
+                    <div class="text-accentBronze font-script text-3xl font-bold">&</div>
+
+                    <div class="p-3 rounded-2xl bg-creamWarm/60 border border-earthMedium/10">
+                        <h4 class="text-lg font-bold text-earthMedium">Rifky Arya Nur Salman</h4>
+                        <p class="text-xs font-sans text-earthMedium/80 mt-1">Putra Tercinta dari <br><b>Bpk. Andri Suhendar</b> & <b>Ibu Rani Rosmawati</b></p>
+                    </div>
+                </div>
+
+                <!-- Ticket Details Grid -->
+                <div class="grid grid-cols-2 gap-3 mt-6 text-xs font-mono text-earthMedium">
+                    <div class="p-3 rounded-xl bg-earthMedium/5 border border-earthMedium/10">
+                        <span class="text-[10px] text-earthMedium/60 block">DATE & TIME</span>
+                        <span class="font-bold">Minggu, 18 Okt 2026</span>
+                    </div>
+                    <div class="p-3 rounded-xl bg-earthMedium/5 border border-earthMedium/10">
+                        <span class="text-[10px] text-earthMedium/60 block">DRESS CODE</span>
+                        <span class="font-bold">Earth Tone & Neutral</span>
+                    </div>
+                </div>
+
+                <!-- Barcode Footer -->
+                <div class="mt-8 pt-4 border-t-2 border-dashed border-earthMedium/30 text-center font-mono">
+                    <div class="text-2xl tracking-[8px] text-earthMedium font-bold mb-1">|||||| ||||| |||||||| |||||</div>
+                    <p class="text-[9px] text-earthMedium/70">TICKET NO: MR-20261018-LOVE • VALID FOR 2 PERSONS</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3D COUNTDOWN TIMER -->
+        <section class="glass-3d rounded-3xl p-8 text-center space-y-6 border border-gold/40" data-aos="fade-up">
+            <h3 class="font-serif text-xl font-bold gold-text tracking-widest uppercase"><i class="fa-regular fa-clock mr-2"></i> Hitung Mundur Hari Bahagia</h3>
+            
+            <div class="grid grid-cols-4 gap-2 md:gap-4 font-mono">
+                <div class="glass-3d p-3 md:p-4 rounded-2xl border border-gold/30">
+                    <span id="cdDays" class="block text-2xl md:text-4xl font-bold text-gold">00</span>
+                    <span class="text-[10px] md:text-xs text-creamWarm/70">HARI</span>
+                </div>
+                <div class="glass-3d p-3 md:p-4 rounded-2xl border border-gold/30">
+                    <span id="cdHours" class="block text-2xl md:text-4xl font-bold text-gold">00</span>
+                    <span class="text-[10px] md:text-xs text-creamWarm/70">JAM</span>
+                </div>
+                <div class="glass-3d p-3 md:p-4 rounded-2xl border border-gold/30">
+                    <span id="cdMinutes" class="block text-2xl md:text-4xl font-bold text-gold">00</span>
+                    <span class="text-[10px] md:text-xs text-creamWarm/70">MENIT</span>
+                </div>
+                <div class="glass-3d p-3 md:p-4 rounded-2xl border border-gold/30">
+                    <span id="cdSeconds" class="block text-2xl md:text-4xl font-bold text-gold">00</span>
+                    <span class="text-[10px] md:text-xs text-creamWarm/70">DETIK</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- EVENT DETAILS (AKAD & RESEPSI & MAPS) -->
+        <section class="space-y-6" data-aos="fade-up">
+            <div class="text-center space-y-2">
+                <h3 class="font-serif text-2xl font-bold gold-text">RANGKAIAN ACARA</h3>
+                <p class="text-xs text-creamWarm/70">Waktu & Lokasi Pelaksanaan</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6">
+                <!-- Akad -->
+                <div class="glass-3d p-6 rounded-3xl border border-gold/30 space-y-3 relative overflow-hidden group hover:border-gold transition duration-500" data-tilt>
+                    <div class="flex justify-between items-center">
+                        <span class="bg-gold text-earthDark font-bold text-xs px-3 py-1 rounded-full">AKAD NIKAH</span>
+                        <span class="text-xs text-gold font-mono"><i class="fa-regular fa-clock"></i> 09.00 WIB</span>
+                    </div>
+                    <h4 class="font-serif text-lg font-bold text-creamWarm">Rumah Mempelai Wanita</h4>
+                    <p class="text-xs text-creamWarm/80 leading-relaxed">
+                        Kp. Bunisari RT/RW 006/005 Kel/Desa Gadobangkong, Kec. Ngamprah, Kab. Bandung Barat
+                    </p>
+                </div>
+
+                <!-- Resepsi -->
+                <div class="glass-3d p-6 rounded-3xl border border-gold/30 space-y-3 relative overflow-hidden group hover:border-gold transition duration-500" data-tilt>
+                    <div class="flex justify-between items-center">
+                        <span class="bg-gold text-earthDark font-bold text-xs px-3 py-1 rounded-full">RESEPSI</span>
+                        <span class="text-xs text-gold font-mono"><i class="fa-regular fa-clock"></i> 11.00 WIB</span>
+                    </div>
+                    <h4 class="font-serif text-lg font-bold text-creamWarm">Rumah Mempelai Wanita</h4>
+                    <p class="text-xs text-creamWarm/80 leading-relaxed">
+                        Kp. Bunisari RT/RW 006/005 Kel/Desa Gadobangkong, Kec. Ngamprah, Kab. Bandung Barat
+                    </p>
+                </div>
+            </div>
+
+            <!-- GOOGLE MAPS BUTTON -->
+            <div class="text-center pt-2">
+                <a href="https://www.google.com/maps/place/Lapang+voli+seema+rw+11/@-6.8715752,107.515047,117m/data=!3m1!1e3!4m6!3m5!1s0x2e68e500618ade37:0x6268f3a8131bcb05!8m2!3d-6.8715391!4d107.5148641!16s%2Fg%2F11mz7ffgd6" target="_blank" class="inline-flex items-center gap-3 bg-gradient-to-r from-gold via-lightGold to-darkGold text-earthDark font-serif font-bold text-xs px-8 py-4 rounded-2xl shadow-2xl hover:scale-105 transition duration-300">
+                    <i class="fa-solid fa-map-location-dot text-lg"></i> BUKA PETUNJUK LOKASI (GOOGLE MAPS)
+                </a>
+            </div>
+        </section>
+
+        <!-- 3D GALLERY PREWEDDING GRID -->
+        <section class="space-y-6" data-aos="fade-up">
+            <div class="text-center space-y-2">
+                <h3 class="font-serif text-2xl font-bold gold-text"><i class="fa-solid fa-camera-retro mr-2"></i> GALERI PREWEDDING</h3>
+                <p class="text-xs text-creamWarm/70">Momen Indah Kebersamaan Kami</p>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                <div class="rounded-2xl overflow-hidden border border-gold/30 h-48 md:h-64 shadow-lg group" data-tilt>
+                    <img src="image_0.png" alt="Prewed 1" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                </div>
+                <div class="rounded-2xl overflow-hidden border border-gold/30 h-48 md:h-64 shadow-lg group" data-tilt>
+                    <img src="image_2.png" alt="Prewed 2" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                </div>
+                <div class="rounded-2xl overflow-hidden border border-gold/30 h-48 md:h-64 shadow-lg group" data-tilt>
+                    <img src="image_3.png" alt="Prewed 3" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                </div>
+                <div class="rounded-2xl overflow-hidden border border-gold/30 h-48 md:h-64 shadow-lg group" data-tilt>
+                    <img src="image_5.png" alt="Prewed 4" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                </div>
+                <div class="col-span-2 md:col-span-2 rounded-2xl overflow-hidden border border-gold/30 h-48 md:h-64 shadow-lg group" data-tilt>
+                    <img src="image_6.png" alt="Prewed 5" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                </div>
+            </div>
+        </section>
+
+        <!-- DIGITAL GIFT / AMPLOP DIGITAL COMPLETE -->
+        <section class="glass-3d rounded-3xl p-6 md:p-8 space-y-6 border border-gold/40" data-aos="fade-up">
+            <div class="text-center space-y-2">
+                <h3 class="font-serif text-xl font-bold gold-text"><i class="fa-solid fa-gift mr-2"></i> AMPLOP DIGITAL</h3>
+                <p class="text-xs text-creamWarm/80">Doa restu Anda adalah hadiah terindah. Bagi yang ingin memberikan tanda kasih secara digital:</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-4 text-xs font-mono">
+                <!-- OCBC -->
+                <div class="glass-3d p-4 rounded-2xl border border-gold/20 flex justify-between items-center">
+                    <div>
+                        <span class="font-bold text-gold text-sm">BANK OCBC</span>
+                        <p class="text-creamWarm">080810371460</p>
+                        <p class="text-[10px] text-creamWarm/60">a.n Mitha Kumala Dewi</p>
+                    </div>
+                    <button onclick="copyToClipboard('080810371460', 'Bank OCBC')" class="bg-gold text-earthDark px-3 py-2 rounded-xl font-bold text-[10px] hover:bg-lightGold transition">SALIN</button>
+                </div>
+
+                <!-- BCA DIGITAL -->
+                <div class="glass-3d p-4 rounded-2xl border border-gold/20 flex justify-between items-center">
+                    <div>
+                        <span class="font-bold text-gold text-sm">BCA DIGITAL</span>
+                        <p class="text-creamWarm">007042536579</p>
+                        <p class="text-[10px] text-creamWarm/60">a.n Rifky Arya Nur Salman</p>
+                    </div>
+                    <button onclick="copyToClipboard('007042536579', 'BCA Digital')" class="bg-gold text-earthDark px-3 py-2 rounded-xl font-bold text-[10px] hover:bg-lightGold transition">SALIN</button>
+                </div>
+
+                <!-- DANA -->
+                <div class="glass-3d p-4 rounded-2xl border border-gold/20 flex justify-between items-center">
+                    <div>
+                        <span class="font-bold text-gold text-sm">E-WALLET DANA</span>
+                        <p class="text-creamWarm">085872518455</p>
+                        <p class="text-[10px] text-creamWarm/60">a.n Mitha Kumala</p>
+                    </div>
+                    <button onclick="copyToClipboard('085872518455', 'DANA')" class="bg-gold text-earthDark px-3 py-2 rounded-xl font-bold text-[10px] hover:bg-lightGold transition">SALIN</button>
+                </div>
+
+                <!-- SEABANK -->
+                <div class="glass-3d p-4 rounded-2xl border border-gold/20 flex justify-between items-center">
+                    <div>
+                        <span class="font-bold text-gold text-sm">SEABANK</span>
+                        <p class="text-creamWarm">901828300937</p>
+                        <p class="text-[10px] text-creamWarm/60">a.n Mitha / Rifky</p>
+                    </div>
+                    <button onclick="copyToClipboard('901828300937', 'SeaBank')" class="bg-gold text-earthDark px-3 py-2 rounded-xl font-bold text-[10px] hover:bg-lightGold transition">SALIN</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- LIVE RSVP & INTERACTIVE WISH WALL -->
+        <section class="glass-3d rounded-3xl p-6 md:p-8 space-y-6 border border-gold/40" data-aos="fade-up">
+            <div class="text-center space-y-2">
+                <h3 class="font-serif text-2xl font-bold gold-text">RSVP & UCAPAN DOA</h3>
+                <p class="text-xs text-creamWarm/70">Konfirmasi Kehadiran & Berikan Doa Terbaikmu</p>
+            </div>
+
+            <form id="rsvpForm" onsubmit="handleRSVP(event)" class="space-y-4 text-xs font-sans">
+                <div>
+                    <label class="block text-creamWarm font-medium mb-1">Nama Lengkap</label>
+                    <input type="text" id="guestInputName" required placeholder="Tuliskan nama Anda" class="w-full p-3 rounded-xl bg-earthDark/80 border border-gold/30 text-creamWarm focus:outline-none focus:border-gold">
+                </div>
+                <div>
+                    <label class="block text-creamWarm font-medium mb-1">Konfirmasi Kehadiran</label>
+                    <select id="attendanceSelect" class="w-full p-3 rounded-xl bg-earthDark/80 border border-gold/30 text-creamWarm focus:outline-none focus:border-gold">
+                        <option value="Hadir">Saya Akan Hadir</option>
+                        <option value="Tidak Hadir">Maaf, Tidak Bisa Hadir</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-creamWarm font-medium mb-1">Ucapan & Doa Restu</label>
+                    <textarea id="wishInput" rows="3" required placeholder="Tuliskan harapan dan doa untuk Mitha & Rifky" class="w-full p-3 rounded-xl bg-earthDark/80 border border-gold/30 text-creamWarm focus:outline-none focus:border-gold"></textarea>
+                </div>
+                <button type="submit" class="w-full py-3.5 bg-gradient-to-r from-gold to-darkGold text-earthDark font-bold rounded-xl font-serif tracking-wider hover:scale-[1.02] transition">
+                    <i class="fa-solid fa-paper-plane mr-2"></i> KIRIM KONFIRMASI & UCAPAN
+                </button>
+            </form>
+
+            <!-- LIVE WISHES WALL LIST -->
+            <div class="mt-8 pt-6 border-t border-gold/20 space-y-4">
+                <h4 class="text-xs font-mono font-bold text-gold uppercase tracking-wider text-center"><i class="fa-solid fa-comments mr-2"></i> Ucapan dari Tamu Undangan (<span id="wishCount">2</span>)</h4>
+                <div id="wishesContainer" class="space-y-3 max-h-60 overflow-y-auto pr-2">
+                    <div class="glass-3d p-3 rounded-xl border border-gold/20 text-xs">
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="font-bold text-gold font-serif">Keluarga Besar Bandung</span>
+                            <span class="text-[9px] text-creamWarm/50">Baru Saja</span>
+                        </div>
+                        <p class="text-creamWarm/80 italic">"Selamat ya Mitha dan Rifky! Semoga lancar sampai hari H dan menjadi keluarga yang sakinah mawaddah warahmah. Aamiin."</p>
+                    </div>
+                    <div class="glass-3d p-3 rounded-xl border border-gold/20 text-xs">
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="font-bold text-gold font-serif">Sahabat Rifky</span>
+                            <span class="text-[9px] text-creamWarm/50">1 jam lalu</span>
+                        </div>
+                        <p class="text-creamWarm/80 italic">"Happy Wedding bro Rifky & Mitha! Langgeng terus sampai kakek nenek yaaa!"</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="text-center space-y-3 pt-8 pb-12 font-serif text-xs text-creamWarm/60 border-t border-gold/20">
+            <p class="gold-text font-bold text-base">MITHA & RIFKY</p>
+            <p>18.10.2026 • Bandung Barat</p>
+            <p class="text-[10px] font-sans text-creamWarm/40">3D Interactive Wedding Invitation Experience</p>
+        </footer>
+
+    </main>
+
+    <!-- SCRIPTS -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Initialize AOS
+        AOS.init({ duration: 800, once: true });
+
+        // Parse Guest Name from URL ?to=Nama
+        const urlParams = new URLSearchParams(window.location.search);
+        const guestName = urlParams.get('to') || urlParams.get('n');
+        if (guestName) {
+            document.getElementById('guestName').innerText = guestName;
+        }
+
+        // Open Invitation
+        function openInvitation() {
+            const overlay = document.getElementById('coverOverlay');
+            overlay.style.opacity = '0';
+            overlay.style.pointerEvents = 'none';
+            setTimeout(() => { overlay.style.display = 'none'; }, 1000);
+
+            // Auto play music
+            toggleMusic(true);
+        }
+
+        // Music Toggle with Vinyl Animation
+        const music = document.getElementById('bgMusic');
+        const musicStatus = document.getElementById('musicStatus');
+        const vinylDisk = document.getElementById('vinylDisk');
+        let isPlaying = false;
+
+        function toggleMusic(forcePlay = false) {
+            if (!isPlaying || forcePlay) {
+                music.play().then(() => {
+                    isPlaying = true;
+                    musicStatus.innerText = "MUSIK DIPUTAR";
+                    vinylDisk.classList.add('spin-vinyl');
+                }).catch(() => {
+                    isPlaying = false;
+                });
+            } else {
+                music.pause();
+                isPlaying = false;
+                musicStatus.innerText = "PUTAR MUSIK";
+                vinylDisk.classList.remove('spin-vinyl');
+            }
+        }
+
+        // Countdown Timer to 18 October 2026
+        const targetDate = new Date("October 18, 2026 09:00:00").getTime();
+        setInterval(() => {
+            const now = new Date().getTime();
+            const diff = targetDate - now;
+
+            if (diff > 0) {
+                document.getElementById('cdDays').innerText = Math.floor(diff / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
+                document.getElementById('cdHours').innerText = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
+                document.getElementById('cdMinutes').innerText = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
+                document.getElementById('cdSeconds').innerText = Math.floor((diff % (1000 * 60)) / 1000).toString().padStart(2, '0');
+            }
+        }, 1000);
+
+        // Copy to clipboard
+        function copyToClipboard(text, bank) {
+            navigator.clipboard.writeText(text);
+            alert(`Nomor Rekening ${bank} (${text}) berhasil disalin!`);
+        }
+
+        // Live RSVP Handler
+        function handleRSVP(e) {
+            e.preventDefault();
+            const name = document.getElementById('guestInputName').value;
+            const status = document.getElementById('attendanceSelect').value;
+            const wish = document.getElementById('wishInput').value;
+
+            const wishesContainer = document.getElementById('wishesContainer');
+            const wishCount = document.getElementById('wishCount');
+
+            const newCard = document.createElement('div');
+            newCard.className = "glass-3d p-3 rounded-xl border border-gold/40 text-xs animate-bounce";
+            newCard.innerHTML = `
+                <div class="flex justify-between items-center mb-1">
+                    <span class="font-bold text-gold font-serif">${name} <span class="text-[9px] bg-gold/20 text-lightGold px-1.5 py-0.5 rounded ml-1">${status}</span></span>
+                    <span class="text-[9px] text-creamWarm/50">Baru Saja</span>
+                </div>
+                <p class="text-creamWarm/90 italic">"${wish}"</p>
+            `;
+
+            wishesContainer.prepend(newCard);
+            wishCount.innerText = parseInt(wishCount.innerText) + 1;
+
+            alert(`Terima kasih ${name}, konfirmasi kehadiran (${status}) dan ucapan Anda telah masuk!`);
+            document.getElementById('rsvpForm').reset();
+        }
+
+        // 3D Particle Canvas Script
+        const canvas = document.getElementById('particleCanvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 1;
+                this.speedX = Math.random() * 0.5 - 0.25;
+                this.speedY = Math.random() * -0.8 - 0.2;
+                this.opacity = Math.random() * 0.5 + 0.2;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.y < 0) {
+                    this.y = canvas.height;
+                    this.x = Math.random() * canvas.width;
+                }
+            }
+            draw() {
+                ctx.fillStyle = `rgba(212, 175, 55, ${this.opacity})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        for (let i = 0; i < 60; i++) {
+            particles.push(new Particle());
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animateParticles);
+        }
+        animateParticles();
+    </script>
+</body>
+</html>
