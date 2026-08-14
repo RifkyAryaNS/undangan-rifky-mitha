@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Wedding of Mitha & Rifky | Boarding Pass</title>
+    <title>The Wedding of Mitha & Rifky | 3D Luxury Boarding Pass</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Fonts -->
@@ -217,17 +217,141 @@
                     </div>
                 </div>
 
-                <!-- Ticket Details Grid -->
-                <div class="grid grid-cols-2 gap-3 mt-6 text-xs font-mono text-earthMedium">
-                    <div class="p-3 rounded-xl bg-earthMedium/5 border border-earthMedium/10">
-                        <span class="text-[10px] text-earthMedium/60 block">DATE & TIME</span>
-                        <span class="font-bold">Minggu, 18 Okt 2026</span>
+               <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-6 text-xs font-mono text-earthMedium">
+                <!-- DATE & TIME -->
+                <div class="p-4 rounded-xl bg-earthMedium/5 border border-earthMedium/10">
+
+                    <span class="text-[10px] text-earthMedium/60 block mb-2">
+                        DATE & TIME
+                    </span>
+
+                    <div class="space-y-1">
+
+                        <div class="font-bold text-sm">
+                            Minggu, 18 Oktober 2026
+                        </div>
+
+                        <div class="text-earthMedium/70 text-xs">
+                            Pukul 09.00 WIB
+                        </div>
+
                     </div>
-                    <div class="p-3 rounded-xl bg-earthMedium/5 border border-earthMedium/10">
-                        <span class="text-[10px] text-earthMedium/60 block">DRESS CODE</span>
-                        <span class="font-bold">Earth Tone & Neutral</span>
-                    </div>
+
                 </div>
+
+
+                <!-- DRESS CODE -->
+                <div class="p-4 rounded-xl bg-earthMedium/5 border border-earthMedium/10">
+
+                    <span class="text-[10px] text-earthMedium/60 block mb-1">
+                        DRESS CODE
+                    </span>
+
+                    <span class="font-bold block text-sm">
+                        Earth Tone & Neutral
+                    </span>
+
+                    <p class="text-[10px] leading-relaxed
+                            text-earthMedium/60
+                            mt-2 mb-4 italic">
+                        Kami mengajak para tamu untuk mengenakan busana
+                        dengan nuansa warna pada palet berikut.
+                    </p>
+
+
+                    <!-- COLOR PALETTE -->
+                    <div class="grid grid-cols-5 gap-2">
+
+                        <!-- MOCHA -->
+                        <div class="text-center">
+
+                            <div class="w-full aspect-square rounded-lg
+                                        bg-[#6F4E37]
+                                        border border-white/30
+                                        shadow-sm">
+                            </div>
+
+                            <span class="text-[8px] block mt-1
+                                        text-earthMedium/70">
+                                Mocha
+                            </span>
+
+                        </div>
+
+
+                        <!-- TERRACOTTA -->
+                        <div class="text-center">
+
+                            <div class="w-full aspect-square rounded-lg
+                                        bg-[#A0522D]
+                                        border border-white/30
+                                        shadow-sm">
+                            </div>
+
+                            <span class="text-[8px] block mt-1
+                                        text-earthMedium/70">
+                                Terracotta
+                            </span>
+
+                        </div>
+
+
+                        <!-- SAND -->
+                        <div class="text-center">
+
+                            <div class="w-full aspect-square rounded-lg
+                                        bg-[#C2B280]
+                                        border border-white/30
+                                        shadow-sm">
+                            </div>
+
+                            <span class="text-[8px] block mt-1
+                                        text-earthMedium/70">
+                                Sand
+                            </span>
+
+                        </div>
+
+
+                        <!-- CREAM -->
+                        <div class="text-center">
+
+                            <div class="w-full aspect-square rounded-lg
+                                        bg-[#F5F0E6]
+                                        border border-earthMedium/20
+                                        shadow-sm">
+                            </div>
+
+                            <span class="text-[8px] block mt-1
+                                        text-earthMedium/70">
+                                Cream
+                            </span>
+
+                        </div>
+
+
+                        <!-- TAUPE -->
+                        <div class="text-center">
+
+                            <div class="w-full aspect-square rounded-lg
+                                        bg-[#B8A99A]
+                                        border border-white/30
+                                        shadow-sm">
+                            </div>
+
+                            <span class="text-[8px] block mt-1
+                                        text-earthMedium/70">
+                                Taupe
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+                
 
                 <!-- Barcode Footer -->
                 <div class="mt-8 pt-4 border-t-2 border-dashed border-earthMedium/30 text-center font-mono">
@@ -238,8 +362,10 @@
         </section>
 
         <!-- AYAT AL-QURAN -->
-        <section class="glass-3d rounded-3xl p-8 md:p-10 text-center border border-gold/40"
-                data-aos="fade-up">
+        <section
+            class="glass-3d rounded-3xl p-8 md:p-10 text-center border border-gold/40"
+            data-aos="fade-up"
+        >
 
             <div class="max-w-3xl mx-auto">
 
@@ -248,32 +374,76 @@
                     ❦
                 </div>
 
-                <p class="font-serif text-lg md:text-xl leading-loose text-creamWarm/90 italic">
-                    "Dan di antara tanda-tanda kekuasaan-Nya diciptakan-Nya untukmu
-                    pasangan hidup dari jenismu sendiri supaya kamu dapat ketenangan hati
-                    dan dijadikannya kasih sayang di antara kamu. Sesungguhnya yang demikian
-                    menjadi tanda-tanda kebesaran-Nya bagi orang-orang yang berpikir."
+                <!-- Label -->
+                <p class="text-[10px] tracking-[0.3em] uppercase text-creamWarm/60 mb-2">
+                    Firman Allah SWT
                 </p>
 
-                <div class="my-5 flex items-center justify-center gap-3">
+                <!-- Judul -->
+                <h3 class="font-serif text-2xl md:text-3xl font-bold gold-text">
+                    QS. Ar-Rum: 21
+                </h3>
+
+
+                <!-- Terjemahan -->
+                <p class="font-serif italic text-sm md:text-base leading-loose
+                        text-creamWarm/90 max-w-2xl mx-auto mt-7">
+
+                    "Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan
+                    untukmu pasangan hidup dari jenismu sendiri supaya kamu dapat
+                    ketenangan hati dan dijadikannya kasih sayang di antara kamu.
+                    Sesungguhnya yang demikian menjadi tanda-tanda kebesaran-Nya
+                    bagi orang-orang yang berpikir."
+
+                </p>
+
+
+                <!-- Ornamen Pemisah -->
+                <div class="my-6 flex items-center justify-center gap-3">
+
                     <span class="h-px w-12 bg-gold/40"></span>
-                    <span class="text-gold text-sm">❦</span>
+
+                    <span class="text-gold text-sm">
+                        ❦
+                    </span>
+
                     <span class="h-px w-12 bg-gold/40"></span>
+
                 </div>
 
-                <p class="font-serif text-base md:text-lg font-bold gold-text">
+
+                <!-- Ayat Arab -->
+                <div class="px-2 md:px-6">
+
+                    <p
+                        class="font-serif text-xl md:text-2xl leading-[2.2]
+                            text-creamWarm/90"
+                        dir="rtl"
+                    >
+                        وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا
+                        لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً
+                    </p>
+
+                </div>
+
+
+                <!-- Referensi -->
+                <p class="font-serif text-sm md:text-base text-gold/80 mt-6">
                     QS. Ar-Rum: 21
                 </p>
 
             </div>
+
         </section>
 
-        <!-- LOVE STORY / OUR JOURNEY -->
-        <section class="glass-3d rounded-3xl p-8 md:p-10 border border-gold/40"
-                data-aos="fade-up">
+        <!-- LOVE STORY -->
+        <!-- ============================= -->
+
+        <section class="max-w-5xl mx-auto px-5 py-16">
 
             <!-- Header -->
-            <div class="text-center mb-10">
+            <div class="text-center mb-14" data-aos="fade-up">
+
                 <div class="text-gold text-2xl mb-3">
                     ❦
                 </div>
@@ -286,44 +456,97 @@
                     Love Story
                 </h3>
 
-                <p class="font-serif italic text-sm md:text-base text-creamWarm/70 mt-3">
+                <p class="font-serif italic text-sm md:text-base text-creamWarm/70 mt-3 max-w-2xl mx-auto leading-relaxed">
                     Sebuah perjalanan kecil yang membawa kami menuju
                     satu tujuan besar: selamanya bersama.
                 </p>
+
             </div>
 
-            <!-- Timeline -->
-            <div class="relative max-w-3xl mx-auto">
 
-                <!-- Garis tengah -->
-                <div class="absolute left-4 md:left-1/2 top-0 bottom-0
-                            w-px bg-gold/30 md:-translate-x-1/2"></div>
+            <!-- ============================= -->
+            <!-- TIMELINE -->
+            <!-- ============================= -->
+
+            <div class="relative max-w-5xl mx-auto">
+
+                <!-- Garis tengah desktop -->
+                <div class="hidden md:block absolute left-1/2 top-0 bottom-0
+                            w-px bg-gold/30 -translate-x-1/2">
+                </div>
 
 
-                <!-- STORY 1 -->
-                <div class="relative flex items-start mb-12">
+                <!-- ============================= -->
+                <!-- STORY 1 - 2021 -->
+                <!-- ============================= -->
 
-                    <!-- Icon -->
-                    <div class="relative z-10 w-8 h-8 rounded-full
-                                bg-earthDark border-2 border-gold
-                                flex items-center justify-center
-                                text-gold shrink-0">
+                <div class="relative grid grid-cols-1 md:grid-cols-2
+                            gap-8 md:gap-16 mb-16 items-center"
+                    data-aos="fade-up">
 
-                        <i class="fa-regular fa-heart text-xs"></i>
+                    <!-- FOTO -->
+                    <div class="md:pr-10">
+
+                        <div class="relative overflow-hidden rounded-2xl
+                                    border border-gold/30 shadow-xl
+                                    bg-earthDark">
+
+                            <img
+                                src="IMG_0918.jpg"
+                                alt="Awal Pertemuan"
+                                class="w-full h-64 md:h-72 object-cover
+                                    transition duration-700
+                                    hover:scale-105"
+                            >
+
+                            <!-- Overlay -->
+                            <div class="absolute inset-0
+                                        bg-gradient-to-t from-black/40
+                                        via-transparent to-transparent">
+                            </div>
+
+                        </div>
 
                     </div>
 
-                    <div class="ml-6 md:w-[45%] md:ml-0 md:pr-8">
 
-                        <span class="text-xs tracking-[0.2em] text-gold font-semibold">
-                            2020
+                    <!-- CERITA -->
+                    <div class="relative md:pl-10">
+
+                        <!-- Icon timeline -->
+                        <div class="hidden md:flex absolute -left-[25px] top-1
+                                    w-10 h-10 rounded-full
+                                    bg-earthDark border-2 border-gold
+                                    items-center justify-center
+                                    text-gold z-10">
+
+                            <i class="fa-regular fa-heart text-sm"></i>
+
+                        </div>
+
+
+                        <!-- Icon mobile -->
+                        <div class="flex md:hidden w-9 h-9 rounded-full
+                                    bg-earthDark border-2 border-gold
+                                    items-center justify-center
+                                    text-gold mb-4">
+
+                            <i class="fa-regular fa-heart text-xs"></i>
+
+                        </div>
+
+
+                        <span class="text-xs tracking-[0.2em]
+                                    text-gold font-semibold">
+                            2021
                         </span>
 
-                        <h4 class="font-serif text-xl font-bold text-earthMedium mt-1">
+                         <h4 class="font-serif text-2xl font-bold text-[#A47C48] mt-1">
                             Awal Pertemuan
                         </h4>
 
-                        <p class="text-sm leading-relaxed text-creamWarm/70 mt-3">
+                        <p class="text-sm leading-relaxed
+                                text-creamWarm/70 mt-4">
                             Berawal dari sebuah pertemuan sederhana,
                             dua orang yang sebelumnya tidak saling mengenal
                             dipertemukan dalam sebuah cerita yang tidak pernah
@@ -331,32 +554,57 @@
                         </p>
 
                     </div>
+
                 </div>
 
 
-                <!-- STORY 2 -->
-                <div class="relative flex items-start mb-12">
+                <!-- ============================= -->
+                <!-- STORY 2 - 2022 -->
+                <!-- ============================= -->
 
-                    <div class="relative z-10 w-8 h-8 rounded-full
-                                bg-earthDark border-2 border-gold
-                                flex items-center justify-center
-                                text-gold shrink-0">
+                <div class="relative grid grid-cols-1 md:grid-cols-2
+                            gap-8 md:gap-16 mb-16 items-center"
+                    data-aos="fade-up">
 
-                        <i class="fa-regular fa-comments text-xs"></i>
 
-                    </div>
+                    <!-- CERITA -->
+                    <div class="md:order-1 md:pr-10 md:text-right">
 
-                    <div class="ml-6 md:w-[45%] md:ml-[55%] md:pl-8">
+                        <!-- Icon timeline -->
+                        <div class="hidden md:flex absolute left-1/2 top-1
+                                    -translate-x-1/2
+                                    w-10 h-10 rounded-full
+                                    bg-earthDark border-2 border-gold
+                                    items-center justify-center
+                                    text-gold z-10">
 
-                        <span class="text-xs tracking-[0.2em] text-gold font-semibold">
-                            2021
+                            <i class="fa-regular fa-comments text-sm"></i>
+
+                        </div>
+
+
+                        <!-- Icon mobile -->
+                        <div class="flex md:hidden w-9 h-9 rounded-full
+                                    bg-earthDark border-2 border-gold
+                                    items-center justify-center
+                                    text-gold mb-4">
+
+                            <i class="fa-regular fa-comments text-xs"></i>
+
+                        </div>
+
+
+                        <span class="text-xs tracking-[0.2em]
+                                    text-gold font-semibold">
+                            2022
                         </span>
 
-                        <h4 class="font-serif text-xl font-bold text-earthMedium mt-1">
+                        <h4 class="font-serif text-2xl font-bold text-[#A47C48] mt-1">
                             Mulai Mengenal
                         </h4>
 
-                        <p class="text-sm leading-relaxed text-creamWarm/70 mt-3">
+                        <p class="text-sm leading-relaxed
+                                text-creamWarm/70 mt-4">
                             Dari percakapan sederhana, tumbuh rasa nyaman
                             dan semakin banyak cerita yang ingin dibagikan.
                             Perlahan, kami mulai menyadari bahwa kebersamaan
@@ -364,32 +612,106 @@
                         </p>
 
                     </div>
-                </div>
 
 
-                <!-- STORY 3 -->
-                <div class="relative flex items-start mb-12">
+                    <!-- FOTO -->
+                    <div class="md:order-2 md:pl-10">
 
-                    <div class="relative z-10 w-8 h-8 rounded-full
-                                bg-earthDark border-2 border-gold
-                                flex items-center justify-center
-                                text-gold shrink-0">
+                        <div class="relative overflow-hidden rounded-2xl
+                                    border border-gold/30 shadow-xl
+                                    bg-earthDark">
 
-                        <i class="fa-regular fa-heart text-xs"></i>
+                            <img
+                                src="IMG_1009.jpg"
+                                alt="Mulai Mengenal"
+                                class="w-full h-64 md:h-72 object-cover
+                                    transition duration-700
+                                    hover:scale-105"
+                            >
+
+                            <div class="absolute inset-0
+                                        bg-gradient-to-t from-black/40
+                                        via-transparent to-transparent">
+                            </div>
+
+                        </div>
 
                     </div>
 
-                    <div class="ml-6 md:w-[45%] md:ml-0 md:pr-8">
+                </div>
 
-                        <span class="text-xs tracking-[0.2em] text-gold font-semibold">
-                            2023
+
+                <!-- ============================= -->
+                <!-- STORY 3 - 2024 -->
+                <!-- ============================= -->
+
+                <div class="relative grid grid-cols-1 md:grid-cols-2
+                            gap-8 md:gap-16 mb-16 items-center"
+                    data-aos="fade-up">
+
+
+                    <!-- FOTO -->
+                    <div class="md:pr-10">
+
+                        <div class="relative overflow-hidden rounded-2xl
+                                    border border-gold/30 shadow-xl
+                                    bg-earthDark">
+
+                            <img
+                                src="IMG_1042.jpg"
+                                alt="Menjalani Bersama"
+                                class="w-full h-64 md:h-72 object-cover
+                                    transition duration-700
+                                    hover:scale-105"
+                            >
+
+                            <div class="absolute inset-0
+                                        bg-gradient-to-t from-black/40
+                                        via-transparent to-transparent">
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- CERITA -->
+                    <div class="md:pl-10">
+
+                        <!-- Icon timeline -->
+                        <div class="hidden md:flex absolute -left-[25px] top-1
+                                    w-10 h-10 rounded-full
+                                    bg-earthDark border-2 border-gold
+                                    items-center justify-center
+                                    text-gold z-10">
+
+                            <i class="fa-regular fa-heart text-sm"></i>
+
+                        </div>
+
+
+                        <!-- Icon mobile -->
+                        <div class="flex md:hidden w-9 h-9 rounded-full
+                                    bg-earthDark border-2 border-gold
+                                    items-center justify-center
+                                    text-gold mb-4">
+
+                            <i class="fa-regular fa-heart text-xs"></i>
+
+                        </div>
+
+
+                        <span class="text-xs tracking-[0.2em]
+                                    text-gold font-semibold">
+                            2024
                         </span>
 
-                        <h4 class="font-serif text-xl font-bold text-earthMedium mt-1">
+                        <h4 class="font-serif text-2xl font-bold text-[#A47C48] mt-1">
                             Menjalani Bersama
                         </h4>
 
-                        <p class="text-sm leading-relaxed text-creamWarm/70 mt-3">
+                        <p class="text-sm leading-relaxed
+                                text-creamWarm/70 mt-4">
                             Kami belajar bahwa cinta bukan hanya tentang
                             kebahagiaan, tetapi juga tentang saling memahami,
                             mendukung, dan tetap memilih satu sama lain
@@ -397,32 +719,57 @@
                         </p>
 
                     </div>
+
                 </div>
 
 
-                <!-- STORY 4 -->
-                <div class="relative flex items-start mb-12">
+                <!-- ============================= -->
+                <!-- STORY 4 - 2026 -->
+                <!-- ============================= -->
 
-                    <div class="relative z-10 w-8 h-8 rounded-full
-                                bg-earthDark border-2 border-gold
-                                flex items-center justify-center
-                                text-gold shrink-0">
+                <div class="relative grid grid-cols-1 md:grid-cols-2
+                            gap-8 md:gap-16 mb-16 items-center"
+                    data-aos="fade-up">
 
-                        <i class="fa-solid fa-ring text-xs"></i>
 
-                    </div>
+                    <!-- CERITA -->
+                    <div class="md:order-1 md:pr-10 md:text-right">
 
-                    <div class="ml-6 md:w-[45%] md:ml-[55%] md:pl-8">
+                        <!-- Icon timeline -->
+                        <div class="hidden md:flex absolute left-1/2 top-1
+                                    -translate-x-1/2
+                                    w-10 h-10 rounded-full
+                                    bg-earthDark border-2 border-gold
+                                    items-center justify-center
+                                    text-gold z-10">
 
-                        <span class="text-xs tracking-[0.2em] text-gold font-semibold">
+                            <i class="fa-solid fa-ring text-sm"></i>
+
+                        </div>
+
+
+                        <!-- Icon mobile -->
+                        <div class="flex md:hidden w-9 h-9 rounded-full
+                                    bg-earthDark border-2 border-gold
+                                    items-center justify-center
+                                    text-gold mb-4">
+
+                            <i class="fa-solid fa-ring text-xs"></i>
+
+                        </div>
+
+
+                        <span class="text-xs tracking-[0.2em]
+                                    text-gold font-semibold">
                             2026
                         </span>
 
-                        <h4 class="font-serif text-xl font-bold text-earthMedium mt-1">
+                        <h4 class="font-serif text-2xl font-bold text-[#A47C48] mt-1">
                             Menuju Hari Bahagia
                         </h4>
 
-                        <p class="text-sm leading-relaxed text-creamWarm/70 mt-3">
+                        <p class="text-sm leading-relaxed
+                                text-creamWarm/70 mt-4">
                             Setelah melewati berbagai cerita dan perjalanan,
                             kami memutuskan untuk melangkah ke jenjang yang
                             lebih serius dan mengikat janji untuk menjalani
@@ -430,32 +777,67 @@
                         </p>
 
                     </div>
-                </div>
 
 
-                <!-- END -->
-                <div class="relative flex items-start">
+                    <!-- FOTO -->
+                    <div class="md:order-2 md:pl-10">
 
-                    <div class="relative z-10 w-8 h-8 rounded-full
-                                bg-gold border-2 border-gold
-                                flex items-center justify-center
-                                text-earthDark shrink-0">
+                        <div class="relative overflow-hidden rounded-2xl
+                                    border border-gold/30 shadow-xl
+                                    bg-earthDark">
 
-                        <i class="fa-solid fa-heart text-xs"></i>
+                            <img
+                                src="IMG_0937.jpg"
+                                alt="Menuju Hari Bahagia"
+                                class="w-full h-64 md:h-72 object-cover
+                                    transition duration-700
+                                    hover:scale-105"
+                            >
+
+                            <div class="absolute inset-0
+                                        bg-gradient-to-t from-black/40
+                                        via-transparent to-transparent">
+                            </div>
+
+                        </div>
 
                     </div>
 
-                    <div class="ml-6 md:w-[45%] md:ml-0 md:pr-8">
+                </div>
 
-                        <span class="text-xs tracking-[0.2em] text-gold font-semibold">
+
+                <!-- ============================= -->
+                <!-- FINAL -->
+                <!-- ============================= -->
+
+                <div class="relative text-center"
+                    data-aos="fade-up">
+
+                    <!-- Icon -->
+                    <div class="mx-auto w-12 h-12 rounded-full
+                                bg-gold border-2 border-gold
+                                flex items-center justify-center
+                                text-earthDark shadow-lg">
+
+                        <i class="fa-solid fa-heart"></i>
+
+                    </div>
+
+
+                    <div class="mt-6">
+
+                        <span class="text-xs tracking-[0.25em]
+                                    text-gold font-semibold">
                             18 OKTOBER 2026
                         </span>
 
-                        <h4 class="font-serif text-xl font-bold gold-text mt-1">
+                        <h4 class="font-serif text-2xl md:text-3xl
+                                font-bold gold-text mt-2">
                             Forever Begins
                         </h4>
 
-                        <p class="text-sm leading-relaxed text-creamWarm/70 mt-3">
+                        <p class="text-sm leading-relaxed
+                                text-creamWarm/70 mt-4 max-w-xl mx-auto">
                             Hari ketika dua hati mengucapkan janji
                             untuk berjalan bersama, dalam suka maupun duka,
                             menuju satu perjalanan baru sebagai keluarga.
@@ -467,15 +849,24 @@
 
             </div>
 
-            <!-- Closing quote -->
-            <div class="text-center mt-12 pt-8 border-t border-gold/20">
+            <!-- ============================= -->
+            <!-- CLOSING QUOTE -->
+            <!-- ============================= -->
 
-                <p class="font-serif italic text-base md:text-lg text-creamWarm/80">
+            <div class="text-center mt-16 pt-10
+                        border-t border-gold/20"
+                data-aos="fade-up">
+
+                <p class="font-serif italic text-base md:text-lg
+                        text-creamWarm/80 max-w-2xl mx-auto
+                        leading-relaxed">
+
                     "Bukan tentang seberapa lama kami saling mengenal,
                     tetapi tentang bagaimana kami memilih untuk tetap bersama."
+
                 </p>
 
-                <div class="text-gold mt-4">
+                <div class="text-gold mt-5 text-xl">
                     ♥
                 </div>
 
@@ -627,7 +1018,7 @@
         <!-- LIVE RSVP & INTERACTIVE WISH WALL -->
         <section class="glass-3d rounded-3xl p-6 md:p-8 space-y-6 border border-gold/40" data-aos="fade-up">
             <div class="text-center space-y-2">
-                <h3 class="font-serif text-2xl font-bold gold-text">UCAPAN & DOA</h3>
+                <h3 class="font-serif text-2xl font-bold gold-text">KONFIRMASI KEHADIRAN</h3>
                 <p class="text-xs text-creamWarm/70">Konfirmasi Kehadiran & Berikan Doa Terbaikmu</p>
             </div>
 
@@ -648,7 +1039,7 @@
                     <textarea id="wishInput" rows="3" required placeholder="Tuliskan harapan dan doa untuk Mitha & Rifky" class="w-full p-3 rounded-xl bg-earthDark/80 border border-gold/30 text-creamWarm focus:outline-none focus:border-gold"></textarea>
                 </div>
                 <button type="submit" class="w-full py-3.5 bg-gradient-to-r from-gold to-darkGold text-earthDark font-bold rounded-xl font-serif tracking-wider hover:scale-[1.02] transition">
-                    <i class="fa-solid fa-paper-plane mr-2"></i> KIRIM KONFIRMASI & UCAPAN
+                    <i class="fa-solid fa-paper-plane mr-2"></i> KONFIRMASI KEHADIRAN
                 </button>
             </form>
 
@@ -658,6 +1049,135 @@
                 <div id="wishesContainer" class="space-y-3 max-h-60 overflow-y-auto pr-2">
                 </div>
             </div>
+        </section>
+        <!-- DOA & HARAPAN -->
+        <section
+            class="glass-3d rounded-3xl p-8 md:p-10 text-center border border-gold/40"
+            data-aos="fade-up"
+        >
+
+            <div class="max-w-3xl mx-auto">
+
+                <!-- Ornamen -->
+                <div class="text-gold text-2xl mb-4">
+                    ❦
+                </div>
+
+                <!-- Judul -->
+                <h3 class="font-serif text-2xl md:text-3xl font-bold gold-text">
+                    Doa &amp; Harapan
+                </h3>
+
+
+                <!-- Doa Bahasa Arab -->
+                <p
+                    class="font-serif text-xl md:text-2xl leading-loose
+                        text-creamWarm/90 mt-7 px-2 md:px-6"
+                    dir="rtl"
+                >
+                    اللَّهُمَّ بَارِكْ لَهُمَا، وَبَارِكْ عَلَيْهِمَا،
+                    وَاجْمَعْ بَيْنَهُمَا فِي خَيْرٍ
+                </p>
+
+
+                <!-- Terjemahan -->
+                <p
+                    class="font-serif italic text-sm md:text-base
+                        leading-relaxed text-creamWarm/70
+                        max-w-xl mx-auto mt-5"
+                >
+                    "Ya Allah, berkahilah keduanya, limpahkanlah keberkahan
+                    atas keduanya, dan satukanlah mereka dalam kebaikan."
+                </p>
+
+
+                <!-- Ornamen Pemisah -->
+                <div class="my-7 flex items-center justify-center gap-3">
+
+                    <span class="h-px w-12 bg-gold/40"></span>
+
+                    <span class="text-gold text-sm">
+                        ❦
+                    </span>
+
+                    <span class="h-px w-12 bg-gold/40"></span>
+
+                </div>
+
+
+                <!-- Harapan -->
+                <p
+                    class="font-serif italic text-sm md:text-base
+                        leading-relaxed text-creamWarm/80
+                        max-w-xl mx-auto"
+                >
+                    Semoga Allah menjadikan pernikahan ini sebagai awal
+                    dari perjalanan yang penuh cinta, keberkahan,
+                    sakinah, mawaddah, dan rahmah.
+                </p>
+
+
+                <!-- Closing Ornament -->
+                <div class="text-gold text-xl mt-6">
+                    ♥
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- TERIMA KASIH -->
+        <section
+            class="text-center px-4 py-4"
+            data-aos="fade-up"
+        >
+
+            <div class="max-w-2xl mx-auto">
+
+                <!-- Ornamen -->
+                <div class="text-gold text-2xl mb-4">
+                    ❦
+                </div>
+
+                <!-- Judul -->
+                <h3 class="font-serif text-2xl md:text-3xl font-bold gold-text">
+                    Terima Kasih
+                </h3>
+
+                <!-- Pesan -->
+                <p
+                    class="text-sm md:text-base leading-relaxed
+                        text-creamWarm/80
+                        max-w-xl mx-auto mt-5"
+                >
+                    Merupakan suatu kebahagiaan bagi kami apabila
+                    Bapak/Ibu/Saudara/i berkenan hadir dan memberikan
+                    doa restu untuk pernikahan kami.
+                </p>
+
+                <!-- Pesan Penutup -->
+                <p
+                    class="font-serif italic text-sm md:text-base
+                        text-creamWarm/70 mt-5"
+                >
+                    Sampai jumpa di hari bahagia kami.
+                </p>
+
+                <!-- Nama Pengantin -->
+                <p
+                    class="font-script text-4xl md:text-5xl
+                        text-gold mt-7"
+                >
+                    Mitha &amp; Rifky
+                </p>
+
+                <!-- Closing Ornament -->
+                <div class="text-gold text-xl mt-5">
+                    ♥
+                </div>
+
+            </div>
+
         </section>
 
         <!-- FOOTER -->
